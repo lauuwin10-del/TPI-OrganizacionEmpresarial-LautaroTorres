@@ -1,5 +1,9 @@
 import csv
 
+
+# Esta función se encarga de leer los datos de los empleados desde un archivo CSV
+# y devolverlos en un diccionario para que el sistema pueda consultarlos
+
 def cargar_empleados(ruta_csv="empleados.csv"):
     empleados = {}
     try:
@@ -16,35 +20,79 @@ def cargar_empleados(ruta_csv="empleados.csv"):
         print(f"🤖 Bot: ❌ No se encontró el archivo {ruta_csv}")
     return empleados
 
+
+# Esta función simula la interacción de un chatbot para gestionar solicitudes de vacaciones.
+
 def solicitar_vacaciones():
     empleados = cargar_empleados()
+
     print("🤖 Bot: ¡Bienvenido al sistema de Solicitud de Vacaciones! 🏖️")
 
-    legajo = input("👤 Usuario: Ingrese su número de legajo: ").strip()
+    # =============================
+    # VALIDACIÓN DEL LEGAJO
+    # =============================
+    while True:
+        legajo = input("👤 Usuario: Ingrese su número de legajo: ").strip()
 
-    if legajo not in empleados:
-        print("🤖 Bot: ❌ Legajo no encontrado. Solicitud rechazada.")
-        return
+        if legajo in empleados:
+            break
 
-    fechas = input("👤 Usuario: Ingrese las fechas deseadas (ej. 10-06 al 20-06): ").strip()
-    if "-" not in fechas and "/" not in fechas:
-        print("🤖 Bot: ❌ Formato de fechas inválido. Solicitud rechazada.")
-        return
+        print("🤖 Bot: ❌ Legajo no encontrado. Intente nuevamente.")
 
-    dias_solicitados = int(input("👤 Usuario: Ingrese la cantidad de días solicitados: ").strip())
+    # =============================
+    # VALIDACIÓN DE FECHAS
+    # =============================
+    while True:
+        fechas = input("👤 Usuario: Ingrese las fechas deseadas (ej. 10-06 al 20-06): ").strip()
+
+        if "-" in fechas or "/" in fechas:
+            break
+
+        print("🤖 Bot: ❌ Formato de fechas inválido. Intente nuevamente.")
+
+    # =============================
+    # VALIDACIÓN DE DÍAS
+    # =============================
+    while True:
+        try:
+            dias_solicitados = int(input("👤 Usuario: Ingrese la cantidad de días solicitados: ").strip())
+
+            if dias_solicitados <= 0:
+                print("🤖 Bot: ❌ La cantidad de días debe ser mayor que cero.")
+            else:
+                break
+
+        except ValueError:
+            print("🤖 Bot: ❌ Debe ingresar un número válido.")
+
     dias_disponibles = empleados[legajo]["dias_disponibles"]
 
     print(f"🤖 Bot: 📊 Días disponibles para {empleados[legajo]['nombre']}: {dias_disponibles}")
 
     if dias_solicitados <= dias_disponibles:
+
         print("🤖 Bot: ✅ Solicitud enviada a RRHH para revisión...")
-        decision = input("👩‍💼 RRHH: ¿Aprobar solicitud? (si/no): ").strip().lower()
-        if decision == "si":
-            print("🤖 Bot: 🎉 Vacaciones aprobadas. ¡Disfrute su descanso!")
-        else:
-            print("🤖 Bot: ❌ Solicitud rechazada por RRHH.")
+
+        # =============================
+        # VALIDACIÓN DE RESPUESTA RRHH
+        # =============================
+        while True:
+            decision = input("👩‍💼 RRHH: ¿Aprobar solicitud? (si/no): ").strip().lower()
+
+            if decision == "si":
+                print("🤖 Bot: 🎉 Vacaciones aprobadas. ¡Disfrute su descanso!")
+                break
+
+            elif decision == "no":
+                print("🤖 Bot: ❌ Solicitud rechazada por RRHH.")
+                break
+
+            else:
+                print("🤖 Bot: ❌ Debe responder únicamente 'si' o 'no'.")
+
     else:
         print("🤖 Bot: ❌ Saldo insuficiente de días. Solicitud rechazada.")
+
 
 if __name__ == "__main__":
     solicitar_vacaciones()
