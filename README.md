@@ -20,5 +20,6 @@ Además, se incluyen:
 Este proyecto integra conocimientos de programación y organización empresarial, demostrando cómo la tecnología puede optimizar procesos de negocio y preparar al estudiante para desempeñarse como **consultor tecnológico**.
 
 
-Documentacion del TPI: [Document 1 (2).pdf](https://github.com/user-attachments/files/29363681/Document.1.2.pdf)
-video explicativo: 
+Documentacion del TPI: [Document 1 (3).pdf](https://github.com/user-attachments/files/29363944/Document.1.3.pdf)
+
+video explicativo: https://youtu.be/Q9KYlM4Er5Y
